@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多媒体 · BD & 执行看板</title>
+<script src="chart.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root { --bg:#f3f4f6; --card:#fff; --primary:#4f6ef7; --primary-light:#eef1ff; --success:#34c759; --warning:#ff9500; --danger:#ff3b30; --text:#1d1d1f; --text2:#6e6e73; --text3:#aeaeb2; --border:#e5e5ea; --radius:8px; --shadow:0 1px 2px rgba(0,0,0,0.04); --sidebar-bg:#1a1a1e; }
+body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text2); }
+.app { display:flex; min-height:100vh; }
+.sidebar { width:200px; background:var(--sidebar-bg); color:#fff; padding:20px 0; flex-shrink:0; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; }
+.sidebar h2 { padding:0 16px 20px; font-size:14px; font-weight:600; border-bottom:1px solid rgba(255,255,255,0.06); margin-bottom:12px; }
+.sidebar .nav-section { padding:4px 16px 4px; font-size:10px; font-weight:600; color:rgba(255,255,255,0.25); text-transform:uppercase; letter-spacing:0.8px; }
+.sidebar .nav-item { padding:7px 14px; cursor:pointer; font-size:13px; font-weight:500; color:rgba(255,255,255,0.6); margin:1px 8px; border-radius:6px; }
+.sidebar .nav-item:hover { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.85); }
+.sidebar .nav-item.active { background:var(--primary); color:#fff; font-weight:500; }
+.main { flex:1; padding:28px 32px; overflow-y:auto; }
+.header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:8px; }
+.header h1 { font-size:18px; font-weight:600; color:var(--text2); }
+.header .header-sub { font-size:12px; color:var(--text); font-weight:400; margin-left:8px; }
+.section-content { display:none; }
+.section-content.active { display:block; }
+
+.progress-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+.progress-card { background:var(--card); border-radius:var(--radius); padding:16px 20px 18px; box-shadow:var(--shadow); border:1px solid var(--border); }
+.progress-card .pc-label { font-size:12px; font-weight:500; color:var(--text2); margin-bottom:3px; display:flex; align-items:center; gap:4px; }
+.progress-card .pc-value { font-size:22px; font-weight:700; color:var(--text); letter-spacing:-0.3px; }
+.exec-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px; }
+.exec-card { background:var(--card); border-radius:var(--radius); padding:18px 20px; box-shadow:var(--shadow); border:1px solid var(--border); text-align:center; }
+.exec-card .ec-label { font-size:12px; font-weight:500; color:var(--text2); margin-bottom:6px; }
+.exec-card .ec-value { font-size:22px; font-weight:700; color:var(--text); letter-spacing:-0.3px; }
+.exec-card .ec-unit { font-size:12px; color:var(--text); font-weight:400; margin-left:2px; }
+
+.period-title { font-size:13px; font-weight:500; color:var(--text2); }
+
+
+.tl-start, .tl-end { font-size:11px; color:var(--text); white-space:nowrap; font-weight:500; }
+
+
+
+
+
+
+
+
+
+.bd-panels { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+.bd-panel { background:var(--card); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); border:1px solid var(--border); }
+.bd-panel .panel-header { font-size:14px; font-weight:600; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--border); color:var(--text); display:flex; align-items:center; gap:8px; }
+.bd-panel .panel-header .badge { font-size:10px; background:var(--primary-light); color:var(--primary); padding:1px 8px; border-radius:8px; font-weight:500; }
+.metric-row { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid #f0f0f0; }
+.metric-row:last-child { border-bottom:none; }
+.metric-label { font-size:13px; color:var(--text2); font-weight:500; }
+.metric-value { font-size:22px; font-weight:700; color:var(--text); letter-spacing:-0.3px; }
+.metric-unit { font-size:12px; color:var(--text); font-weight:400; margin-left:2px; }
+.note-box { background:#f8f9fa; border-radius:var(--radius); padding:12px 16px; margin-bottom:20px; font-size:12px; color:var(--text2); line-height:1.6; }
+.note-box strong { color:var(--text); }
+.chart-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+.chart-box { background:var(--card); border-radius:var(--radius); padding:16px 20px; box-shadow:var(--shadow); border:1px solid var(--border); }
+.chart-box h3 { font-size:13px; font-weight:600; margin-bottom:12px; color:var(--text2); }
+.chart-box h3 .badge { font-size:10px; background:var(--primary-light); color:var(--primary); padding:1px 8px; border-radius:8px; font-weight:500; margin-left:4px; }
+.full-width { grid-column:1/-1; }
+.data-table { width:100%; border-collapse:separate; border-spacing:0; font-size:12px; background:#fff; border-radius:6px; overflow:hidden; }
+.data-table th { background:#f5f5f7; padding:7px 10px; text-align:left; font-weight:600; color:var(--text); border-bottom:1px solid var(--border); font-size:11px; letter-spacing:0.3px; }
+.data-table td { padding:6px 10px; border-bottom:1px solid #f0f0f0; color:var(--text2); }
+.data-table tr:last-child td { border-bottom:none; }
+.data-table tr:hover td { background:#fafafa; }
+@media (max-width:900px) { .exec-grid { grid-template-columns:1fr; } .sidebar { width:56px; } .sidebar h2, .sidebar .nav-section, .sidebar .nav-item span { display:none; } .sidebar .nav-item { justify-content:center; padding:8px; margin:1px 4px; } .main { padding:16px; } .progress-row, .bd-panels, .chart-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="app">
+<div class="sidebar">
+<h2>多媒看板</h2>
+<div class="nav-section">板块</div>
+<div class="nav-item active" onclick="sw('bd')">BD</div>
+<div class="nav-item" onclick="sw('exec')">执行</div>
+</div>
+<div class="main">
+<div class="header">
+<h1 id="pageTitle">BD看板 <span class="header-sub">机构&达人</span></h1>
+</div>
+
+<div class="section-content active" id="sectionBD">
+
+<div class="progress-row">
+<div class="progress-card" style="text-align:center;">
+<div class="pc-label" style="justify-content:center;">统计周期</div>
+<div class="pc-value" id="statPeriod" style="font-size:15px;letter-spacing:0;">2026年6月</div>
+</div>
+<div class="progress-card" style="text-align:center;">
+<div class="pc-label" style="justify-content:center;">月度进度</div>
+<div class="pc-value" id="monthProgress" style="color:var(--primary);font-size:18px;">0%</div>
+
+</div>
+</div>
+
+<div class="bd-panels">
+<div class="bd-panel">
+<div class="panel-header">机构<span class="badge">Agency</span></div>
+<div class="metric-row"><span class="metric-label">红书机构数量</span><span><span class="metric-value" id="agencyRedCount">0</span><span class="metric-unit">家</span></span></div>
+<div class="metric-row"><span class="metric-label">B站机构数量</span><span><span class="metric-value" id="agencyBiliCount">0</span><span class="metric-unit">家</span></span></div>
+<div class="metric-row"><span class="metric-label">平均返点</span><span><span class="metric-value" id="agencyRebate">0</span><span class="metric-unit">%</span></span></div>
+</div>
+<div class="bd-panel">
+<div class="panel-header">达人<span class="badge">KOL</span></div>
+<div class="metric-row"><span class="metric-label">发布数量</span><span><span class="metric-value" id="kolPublishCount" style="font-size:16px;font-weight:500;color:var(--text);">暂未统计</span></span></div>
+<div class="metric-row"><span class="metric-label">平均返点</span><span><span class="metric-value" id="kolRebate" style="font-size:16px;font-weight:500;color:var(--text);">暂未统计</span></span></div>
+</div>
+</div>
+
+</div>
+
+<div class="section-content" id="sectionExec">
+
+<div class="progress-row">
+<div class="progress-card" style="text-align:center;">
+<div class="pc-label" style="justify-content:center;">统计周期</div>
+<div class="pc-value" id="execPeriod" style="font-size:15px;letter-spacing:0;">6月1日-6月25日</div>
+</div>
+<div class="progress-card" style="text-align:center;">
+<div class="pc-label" style="justify-content:center;">月度进度</div>
+<div class="pc-value" id="execProgress" style="color:var(--primary);font-size:18px;">0%</div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+
+<div class="progress-card" style="text-align:center;padding:16px 20px;">
+<div class="pc-label" style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border);text-align:left;">返点</div>
+<div style="display:flex;flex-direction:column;gap:8px;">
+<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:500;color:var(--text2);padding:4px 0;"><span>目标返点</span><span style="font-size:18px;font-weight:700;color:var(--text);">¥100,000</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:500;color:var(--text2);padding:4px 0;"><span>实际返点</span><span style="font-size:18px;font-weight:700;color:var(--text);">¥0</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:500;color:var(--text2);padding:4px 0;"><span>完成进度</span><span style="font-size:18px;font-weight:700;color:var(--text);">0%</span></div>
+</div>
+</div>
+
+<div class="progress-card" style="text-align:center;padding:16px 20px;">
+<div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border);text-align:left;">提报</div>
+<div style="display:flex;flex-direction:column;gap:8px;"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;background:#f5f5f7;border-radius:6px;padding:12px 8px;">
+<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">执行</div><div style="font-size:14px;font-weight:600;color:var(--text);">张三</div></div>
+<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">提报数</div><div style="font-size:14px;font-weight:700;color:var(--text);">47</div></div>
+<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">选中率</div><div style="font-size:14px;font-weight:700;color:var(--text);">36.2%</div></div>
+</div></div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+
+<div class="progress-card" style="text-align:center;">
+<div style="display:flex;flex-direction:column;gap:10px;">
+<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">目标返点</div><div style="font-size:20px;font-weight:700;color:var(--text);">¥100,000</div></div>
+<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">实际返点</div><div style="font-size:20px;font-weight:700;color:var(--text);">¥0</div></div>
+<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">完成进度</div><div style="font-size:20px;font-weight:700;color:var(--text);">0%</div></div>
+</div>
+</div>
+
+<div class="progress-card" style="text-align:center;">
+<div style="display:flex;flex-direction:column;gap:10px;">
+<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">账号提报总数</div><div style="font-size:14px;font-weight:700;color:var(--text);">47</div></div>
+<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">账号选中总数</div><div style="font-size:20px;font-weight:700;color:var(--text);">17</div></div>
+<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">平均选中率</div><div style="font-size:14px;font-weight:700;color:var(--text);">36.2%</div></div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="progress-card" style="text-align:center;grid-column:1/-1;">
+
+<div style="display:flex;flex-direction:column;gap:10px;">
+<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">目标返点</div><div style="font-size:20px;font-weight:700;color:var(--text);">¥100,000</div></div>
+<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">实际返点</div><div style="font-size:20px;font-weight:700;color:var(--text);">¥0</div></div>
+<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">完成进度</div><div style="font-size:20px;font-weight:700;color:var(--text);">0%</div></div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="exec-card"><div class="ec-label">账号平均选中率</div><div class="ec-value" id="execSelectRate">0</div></div>
+
+</div>
+
+</div>
+</div>
+</div>
+<script src="chart.min.js"></script>
+<script src="数据.js"></script>
+<script>
+function sum(a){return a.reduce((x,y)=>x+y,0)}
+function gp(a,k){const m=new Map();a.forEach(o=>{const v=o[k];if(!m.has(v))m.set(v,[]);m.get(v).push(o)});return m}
+let ch={},tab='bd';
+function dc(id){if(ch[id]){ch[id].destroy();delete ch[id]}}
+const BD_DATA={agency:{redCount:8,biliCount:1,rebate:27.3},kol:{publishCount:"暂未统计",rebate:"暂未统计"}};
+function sw(t){tab=t;document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.section-content').forEach(e=>e.classList.remove('active'));if(t==='bd'){document.querySelector('.nav-item:nth-child(3)').classList.add('active');document.getElementById('sectionBD').classList.add('active');document.getElementById('pageTitle').innerHTML='BD看板 <span class="header-sub">机构&达人</span>';rBD()}else{document.querySelector('.nav-item:nth-child(4)').classList.add('active');document.getElementById('sectionExec').classList.add('active');document.getElementById('pageTitle').innerHTML='执行看板 <span class="header-sub">提报&返点</span>';rEX()}}
+function rBD(){const dt=[...new Set(RAW_DATA.map(r=>r.日期))].sort();const ld=dt.length>0?dt[dt.length-1]:"";const mth="6",yr="2026",dim=30;let dom=0;if(ld){dom=parseInt(ld.split("-")[2])}const pct=Math.round(dom/dim*100);
+document.getElementById("statPeriod").textContent=mth+"月1日 - "+mth+"月"+dom+"日";
+document.getElementById("monthDateRange").textContent=mth+"月1日 - "+mth+"月"+dom+"日";
+document.getElementById("monthProgress").textContent=pct+"%";
+document.getElementById("agencyRedCount").textContent=BD_DATA.agency.redCount;document.getElementById("agencyBiliCount").textContent=BD_DATA.agency.biliCount;document.getElementById("agencyRebate").textContent=BD_DATA.agency.rebate;document.getElementById("kolPublishCount").textContent=BD_DATA.kol.publishCount;document.getElementById("kolRebate").textContent=BD_DATA.kol.rebate}function rEX(){const dt=[...new Set(RAW_DATA.map(r=>r.日期))].sort();const ld=dt.length>0?dt[dt.length-1]:"";const mth="6",yr="2026",dim=30;let dom=0;if(ld){dom=parseInt(ld.split("-")[2])}const pct=Math.round(dom/dim*100);
+document.getElementById("execPeriod").textContent=mth+"月1日 - "+mth+"月"+dom+"日";
+document.getElementById("execDateRange").textContent=mth+"月1日 - "+mth+"月"+dom+"日";
+document.getElementById("execProgress").textContent=pct+"%";
+const ED={targetRebate:'¥100,000',actualRebate:'¥0',accountTotal:47,selectRate:'36.2%',profitTotal:'¥46,300',profitRate:'36.2%'};;
+document.getElementById("execTargetRebate").textContent=ED.targetRebate;
+document.getElementById("execAccountTotal").textContent=ED.accountTotal;
+document.getElementById("execSelectRate").textContent=ED.selectRate;
+document.getElementById("execProfitTotal").textContent=ED.profitTotal;
+document.getElementById("execProfitRate").textContent=ED.profitRate;}rBD();
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
