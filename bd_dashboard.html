@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>多媒体 · BD & 执行看板</title>
+<title>媒介看板</title>
 <script src="chart.min.js"></script>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -99,18 +99,37 @@ body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Rob
 
 <div class="bd-panels">
 <div class="bd-panel">
-<div class="panel-header">机构<span class="badge">Agency</span></div>
-<div class="metric-row"><span class="metric-label">红书机构数量</span><span><span class="metric-value" id="agencyRedCount" style="font-size:16px;">0</span><span class="metric-unit">家</span></span></div>
-<div class="metric-row"><span class="metric-label">B站机构数量</span><span><span class="metric-value" id="agencyBiliCount" style="font-size:16px;">0</span><span class="metric-unit">家</span></span></div>
-<div class="metric-row"><span class="metric-label">平均返点</span><span><span class="metric-value" id="agencyRebate" style="font-size:16px;">0</span><span class="metric-unit">%</span></span></div>
+<div class="panel-header">机构</div>
+<div style="display:flex;flex-direction:column;gap:8px;">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;text-align:center;">
+<div style="font-size:13px;font-weight:500;color:var(--text2);padding:4px 0;">平台</div>
+<div style="font-size:13px;font-weight:500;color:var(--text2);padding:4px 0;">数量</div>
+<div style="font-size:13px;font-weight:500;color:var(--text2);padding:4px 0;">平均返点</div>
+<div style="font-size:13px;font-weight:500;color:var(--text2);padding:4px 0;">达标率</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;text-align:center;">
+<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;"><span id="agencyRedCount" style="font-size:16px;font-weight:600;color:var(--text);">小红书</span></div>
+<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;"><span id="agencyBiliCount">0</span></div>
+<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;"><span id="agencyRebate">0</span><span class="metric-unit">%</span></div>
+<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;"><span id="agencyTargetRate">0</span></div>
+</div>
+</div>
 </div>
 <div class="bd-panel">
-<div class="panel-header">达人<span class="badge">KOL</span></div>
-<div class="metric-row"><span class="metric-label">发布数量</span><span><span class="metric-value" id="kolPublishCount" style="font-size:16px;font-weight:500;color:var(--text);">暂未统计</span></span></div>
-<div class="metric-row"><span class="metric-label">平均返点</span><span><span class="metric-value" id="kolRebate" style="font-size:16px;font-weight:500;color:var(--text);">暂未统计</span></span></div>
+<div class="panel-header">达人</div>
+<div style="display:flex;flex-direction:column;gap:8px;">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;text-align:center;">
+<div style="font-size:13px;font-weight:500;color:var(--text2);padding:4px 0;">发布数量</div>
+<div style="font-size:13px;font-weight:500;color:var(--text2);padding:4px 0;">平均返点</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;text-align:center;">
+<div style="font-size:16px;font-weight:500;color:var(--text);padding:4px 0;"><span id="kolPublishCount">0</span></div>
+<div style="font-size:16px;font-weight:500;color:var(--text);padding:4px 0;"><span id="kolRebate">0</span></div>
+</div>
 </div>
 </div>
 
+</div>
 </div>
 
 <div class="section-content" id="sectionExec">
@@ -131,8 +150,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Rob
 <div class="progress-card" style="text-align:center;padding:16px 20px;">
 <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border);text-align:left;">提报</div>
 <div style="display:flex;flex-direction:column;gap:8px;"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;background:#f5f5f7;border-radius:6px;padding:12px 8px;">
-<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">执行</div><div style="font-size:16px;font-weight:600;color:var(--text);">张三</div></div>
-<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">提报数</div><div style="font-size:16px;font-weight:700;color:var(--text);">47</div></div>
+<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">执行</div><div style="font-size:16px;font-weight:600;color:var(--text);">张三</div></div><div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">提报数</div><div style="font-size:16px;font-weight:700;color:var(--text);">47</div></div>
 <div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">选中率</div><div style="font-size:16px;font-weight:700;color:var(--text);">36.2%</div></div>
 </div></div>
 </div>
@@ -148,144 +166,10 @@ body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Rob
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center;">
 <div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">¥100,000</div>
 <div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">¥0</div>
-<div style="font-size:16px;font-weight:700;color:var(--primary);padding:4px 0;">0%</div>
+<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">0%</div>
 </div>
 </div>
 </div>
-
-</div>
-
-</div>
-</div>
-</div>
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-
-<div class="progress-card" style="text-align:center;padding:16px 20px;">
-<div class="pc-label" style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border);text-align:left;">提报_CONTENT_PLACEHOLDER返点</div>
-<div style="display:flex;flex-direction:column;gap:8px;">
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center;">
-<div style="font-size:12px;color:var(--text2);padding:4px 0;">目标返点</div>
-<div style="font-size:12px;color:var(--text2);padding:4px 0;">实际返点</div>
-<div style="font-size:12px;color:var(--text2);padding:4px 0;">完成进度</div>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center;">
-<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">¥100,000</div>
-<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">¥0</div>
-<div style="font-size:16px;font-weight:700;color:var(--primary);padding:4px 0;">0%</div>
-</div>
-</div>
-</div>
-
-
-<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">提报数</div><div style="font-size:16px;font-weight:700;color:var(--text);">47</div></div>
-<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">选中率</div><div style="font-size:16px;font-weight:700;color:var(--text);">36.2%</div></div>
-</div></div>
-</div>
-
-</div>
-
-</div>
-</div>
-</div>
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-
-<div class="progress-card" style="text-align:center;padding:16px 20px;">
-<div class="pc-label" style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border);text-align:left;">提报_CONTENT_PLACEHOLDER返点</div>
-<div style="display:flex;flex-direction:column;gap:8px;">
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center;">
-<div style="font-size:12px;color:var(--text2);padding:4px 0;">目标返点</div>
-<div style="font-size:12px;color:var(--text2);padding:4px 0;">实际返点</div>
-<div style="font-size:12px;color:var(--text2);padding:4px 0;">完成进度</div>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center;">
-<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">¥100,000</div>
-<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">¥0</div>
-<div style="font-size:16px;font-weight:700;color:var(--primary);padding:4px 0;">0%</div>
-</div>
-</div>
-</div>
-
-
-<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">提报数</div><div style="font-size:16px;font-weight:700;color:var(--text);">47</div></div>
-<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">选中率</div><div style="font-size:16px;font-weight:700;color:var(--text);">36.2%</div></div>
-</div></div>
-</div>
-
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
-<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">提报数</div><div style="font-size:16px;font-weight:700;color:var(--text);">47</div></div>
-<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">选中率</div><div style="font-size:16px;font-weight:700;color:var(--text);">36.2%</div></div>
-</div></div>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-</div>
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-
-<div class="progress-card" style="text-align:center;padding:16px 20px;">
-<div class="pc-label" style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border);text-align:left;">提报_CONTENT_PLACEHOLDER返点</div>
-<div style="display:flex;flex-direction:column;gap:8px;">
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center;">
-<div style="font-size:12px;color:var(--text2);padding:4px 0;">目标返点</div>
-<div style="font-size:12px;color:var(--text2);padding:4px 0;">实际返点</div>
-<div style="font-size:12px;color:var(--text2);padding:4px 0;">完成进度</div>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center;">
-<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">¥100,000</div>
-<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">¥0</div>
-<div style="font-size:16px;font-weight:700;color:var(--primary);padding:4px 0;">0%</div>
-</div>
-</div>
-</div>
-
-
-<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">提报数</div><div style="font-size:16px;font-weight:700;color:var(--text);">47</div></div>
-<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">选中率</div><div style="font-size:16px;font-weight:700;color:var(--text);">36.2%</div></div>
-</div></div>
-</div>
-
-</div>
-</div>
-</div>
-
-<div class="progress-card" style="text-align:center;">
-<div style="display:flex;flex-direction:column;gap:10px;">
-<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">账号提报总数</div><div style="font-size:16px;font-weight:700;color:var(--text);">47</div></div>
-<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">账号选中总数</div><div style="font-size:20px;font-weight:700;color:var(--text);">17</div></div>
-<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">平均选中率</div><div style="font-size:16px;font-weight:700;color:var(--text);">36.2%</div></div>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-</div>
-
-<div class="progress-card" style="text-align:center;grid-column:1/-1;">
-
-<div style="display:flex;flex-direction:column;gap:10px;">
-<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">目标返点</div><div style="font-size:20px;font-weight:700;color:var(--text);">¥100,000</div></div>
-<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">实际返点</div><div style="font-size:20px;font-weight:700;color:var(--text);">¥0</div></div>
-<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text);">完成进度</div><div style="font-size:20px;font-weight:700;color:var(--text);">0%</div></div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="exec-card"><div class="ec-label">账号平均选中率</div><div class="ec-value" id="execSelectRate">0</div></div>
 
 </div>
 
@@ -299,65 +183,18 @@ function sum(a){return a.reduce((x,y)=>x+y,0)}
 function gp(a,k){const m=new Map();a.forEach(o=>{const v=o[k];if(!m.has(v))m.set(v,[]);m.get(v).push(o)});return m}
 let ch={},tab='bd';
 function dc(id){if(ch[id]){ch[id].destroy();delete ch[id]}}
-const BD_DATA={agency:{redCount:8,biliCount:1,rebate:27.3},kol:{publishCount:"暂未统计",rebate:"暂未统计"}};
+const BD_DATA={agency:{redCount:"小红书",targetRate:"85%",biliCount:1,rebate:27.3},kol:{publishCount:0,rebate:0}};
 function sw(t){tab=t;document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.section-content').forEach(e=>e.classList.remove('active'));if(t==='bd'){document.querySelector('.nav-item:nth-child(3)').classList.add('active');document.getElementById('sectionBD').classList.add('active');document.getElementById('pageTitle').innerHTML='BD看板 <span class="header-sub">机构&达人</span>';rBD()}else{document.querySelector('.nav-item:nth-child(4)').classList.add('active');document.getElementById('sectionExec').classList.add('active');document.getElementById('pageTitle').innerHTML='执行看板 <span class="header-sub">提报&返点</span>';rEX()}}
 function rBD(){const now=new Date();const yr=now.getFullYear();const mth=String(now.getMonth()+1);const dom=now.getDate();const dim=new Date(yr,now.getMonth()+1,0).getDate();const pct=Math.round(dom/dim*100);
 document.getElementById("statPeriod").textContent=mth+"月1日 - "+mth+"月"+dom+"日";
 document.getElementById("monthProgress").textContent=pct+"%";
-document.getElementById("agencyRedCount").textContent=BD_DATA.agency.redCount;document.getElementById("agencyBiliCount").textContent=BD_DATA.agency.biliCount;document.getElementById("agencyRebate").textContent=BD_DATA.agency.rebate;document.getElementById("kolPublishCount").textContent=BD_DATA.kol.publishCount;document.getElementById("kolRebate").textContent=BD_DATA.kol.rebate}function rEX(){const now=new Date();const yr=now.getFullYear();const mth=String(now.getMonth()+1);const dom=now.getDate();const dim=new Date(yr,now.getMonth()+1,0).getDate();const pct=Math.round(dom/dim*100);
+document.getElementById("agencyRedCount").textContent=BD_DATA.agency.redCount;document.getElementById("agencyBiliCount").textContent=BD_DATA.agency.biliCount;document.getElementById("agencyRebate").textContent=BD_DATA.agency.rebate;document.getElementById("kolPublishCount").textContent=BD_DATA.kol.publishCount;document.getElementById("kolRebate").textContent=BD_DATA.kol.rebate;var tr=BD_DATA.agency.targetRate;var trNum=parseFloat(tr);var trColor="var(--success)";if(trNum<50){trColor="var(--danger)"}else if(trNum<=100){trColor="var(--warning)"};document.getElementById("agencyTargetRate").textContent=tr;document.getElementById("agencyTargetRate").style.color=trColor}function rEX(){const now=new Date();const yr=now.getFullYear();const mth=String(now.getMonth()+1);const dom=now.getDate();const dim=new Date(yr,now.getMonth()+1,0).getDate();const pct=Math.round(dom/dim*100);
 document.getElementById("execPeriod").textContent=mth+"月1日-"+mth+"月"+dom+"日";
 document.getElementById("execProgress").textContent=pct+"%";
 const ED={targetRebate:"¥100,000",actualRebate:"¥0",accountTotal:47,selectCount:17,selectRate:"36.2%",profitTotal:"¥46,300",profitRate:"36.2%"};}rBD();
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
