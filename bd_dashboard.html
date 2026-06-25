@@ -149,9 +149,9 @@ body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Rob
 
 <div class="progress-card" style="text-align:center;padding:16px 20px;">
 <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border);text-align:left;">提报</div>
-<div style="display:flex;flex-direction:column;gap:8px;"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;background:#f5f5f7;border-radius:6px;padding:12px 8px;">
-<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">执行</div><div style="font-size:16px;font-weight:600;color:var(--text);">张三</div></div><div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">提报数</div><div style="font-size:16px;font-weight:700;color:var(--text);">47</div></div>
-<div style="text-align:center;"><div style="font-size:14px;color:var(--text2);margin-bottom:4px;">选中率</div><div style="font-size:16px;font-weight:700;color:var(--text);">36.2%</div></div>
+<div style="display:flex;flex-direction:column;gap:8px;"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+<div style="text-align:center;"><div style="font-size:14px;font-weight:400;color:var(--text2);padding:4px 0;">执行</div><div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">张三</div></div><div style="text-align:center;"><div style="font-size:14px;font-weight:400;color:var(--text2);padding:4px 0;">提报数</div><div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">47</div></div>
+<div style="text-align:center;"><div style="font-size:14px;font-weight:400;color:var(--text2);padding:4px 0;">选中率</div><div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">36.2%</div></div>
 </div></div>
 </div>
 
@@ -159,12 +159,12 @@ body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Rob
 <div class="pc-label" style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border);text-align:left;">返点</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center;">
-<div style="font-size:12px;color:var(--text2);padding:4px 0;">目标返点</div>
-<div style="font-size:12px;color:var(--text2);padding:4px 0;">实际返点</div>
-<div style="font-size:12px;color:var(--text2);padding:4px 0;">完成进度</div>
+<div style="font-size:14px;font-weight:400;color:var(--text2);padding:4px 0;">目标返点</div>
+<div style="font-size:14px;font-weight:400;color:var(--text2);padding:4px 0;">实际返点</div>
+<div style="font-size:14px;font-weight:400;color:var(--text2);padding:4px 0;">完成进度</div>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center;">
-<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">¥100,000</div>
+<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">100000</div>
 <div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">¥0</div>
 <div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;">0%</div>
 </div>
@@ -189,12 +189,13 @@ function rBD(){const now=new Date();const yr=now.getFullYear();const mth=String(
 document.getElementById("statPeriod").textContent=mth+"月1日 - "+mth+"月"+dom+"日";
 document.getElementById("monthProgress").textContent=pct+"%";
 document.getElementById("agencyRedCount").textContent=BD_DATA.agency.redCount;document.getElementById("agencyBiliCount").textContent=BD_DATA.agency.biliCount;document.getElementById("agencyRebate").textContent=BD_DATA.agency.rebate;document.getElementById("kolPublishCount").textContent=BD_DATA.kol.publishCount;document.getElementById("kolRebate").textContent=BD_DATA.kol.rebate;var tr=BD_DATA.agency.targetRate;var trNum=parseFloat(tr);var trColor="var(--success)";if(trNum<50){trColor="var(--danger)"}else if(trNum<=100){trColor="var(--warning)"};document.getElementById("agencyTargetRate").textContent=tr;document.getElementById("agencyTargetRate").style.color=trColor}function rEX(){const now=new Date();const yr=now.getFullYear();const mth=String(now.getMonth()+1);const dom=now.getDate();const dim=new Date(yr,now.getMonth()+1,0).getDate();const pct=Math.round(dom/dim*100);
-document.getElementById("execPeriod").textContent=mth+"月1日-"+mth+"月"+dom+"日";
+document.getElementById("execPeriod").textContent=mth+"月1日 - "+mth+"月"+dom+"日";
 document.getElementById("execProgress").textContent=pct+"%";
-const ED={targetRebate:"¥100,000",actualRebate:"¥0",accountTotal:47,selectCount:17,selectRate:"36.2%",profitTotal:"¥46,300",profitRate:"36.2%"};}rBD();
+const ED={targetRebate:"100000",actualRebate:"¥0",accountTotal:47,selectCount:17,selectRate:"36.2%",profitTotal:"¥46,300",profitRate:"36.2%"};}rBD();
 </script>
 </body>
 </html>
+
 
 
 
