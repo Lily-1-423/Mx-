@@ -123,8 +123,8 @@ body { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Rob
 <div style="font-size:13px;font-weight:500;color:var(--text2);padding:4px 0;">平均返点</div>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;text-align:center;">
-<div style="font-size:16px;font-weight:500;color:var(--text);padding:4px 0;"><span id="kolPublishCount">0</span></div>
-<div style="font-size:16px;font-weight:500;color:var(--text);padding:4px 0;"><span id="kolRebate">0</span></div>
+<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;"><span id="kolPublishCount">0</span></div>
+<div style="font-size:16px;font-weight:700;color:var(--text);padding:4px 0;"><span id="kolRebate">0</span></div>
 </div>
 </div>
 </div>
@@ -188,7 +188,7 @@ function sw(t){tab=t;document.querySelectorAll('.nav-item').forEach(e=>e.classLi
 function rBD(){const now=new Date();const yr=now.getFullYear();const mth=String(now.getMonth()+1);const dom=now.getDate();const dim=new Date(yr,now.getMonth()+1,0).getDate();const pct=Math.round(dom/dim*100);
 document.getElementById("statPeriod").textContent=mth+"月1日 - "+mth+"月"+dom+"日";
 document.getElementById("monthProgress").textContent=pct+"%";
-document.getElementById("agencyRedCount").textContent=BD_DATA.agency.redCount;document.getElementById("agencyBiliCount").textContent=BD_DATA.agency.biliCount;document.getElementById("agencyRebate").textContent=BD_DATA.agency.rebate;document.getElementById("kolPublishCount").textContent=BD_DATA.kol.publishCount;document.getElementById("kolRebate").textContent=BD_DATA.kol.rebate;var tr=BD_DATA.agency.targetRate;var trNum=parseFloat(tr);var trColor="var(--success)";if(trNum<50){trColor="var(--danger)"}else if(trNum<=100){trColor="var(--warning)"};document.getElementById("agencyTargetRate").textContent=tr;document.getElementById("agencyTargetRate").style.color=trColor}function rEX(){const now=new Date();const yr=now.getFullYear();const mth=String(now.getMonth()+1);const dom=now.getDate();const dim=new Date(yr,now.getMonth()+1,0).getDate();const pct=Math.round(dom/dim*100);
+document.getElementById("agencyRedCount").textContent=BD_DATA.agency.redCount;document.getElementById("agencyBiliCount").textContent=BD_DATA.agency.biliCount;document.getElementById("agencyRebate").textContent=BD_DATA.agency.rebate;document.getElementById("kolPublishCount").textContent=BD_DATA.kol.publishCount;document.getElementById("kolRebate").textContent=BD_DATA.kol.rebate;document.getElementById("agencyTargetRate").textContent=BD_DATA.agency.targetRate;document.getElementById("agencyTargetRate").style.color="var(--text)"}function rEX(){const now=new Date();const yr=now.getFullYear();const mth=String(now.getMonth()+1);const dom=now.getDate();const dim=new Date(yr,now.getMonth()+1,0).getDate();const pct=Math.round(dom/dim*100);
 document.getElementById("execPeriod").textContent=mth+"月1日 - "+mth+"月"+dom+"日";
 document.getElementById("execProgress").textContent=pct+"%";
 const ED={targetRebate:"100000",actualRebate:"¥0",accountTotal:47,selectCount:17,selectRate:"36.2%",profitTotal:"¥46,300",profitRate:"36.2%"};}rBD();
